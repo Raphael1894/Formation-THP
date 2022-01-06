@@ -1,0 +1,74 @@
+<p id="notice"><%= notice %></p>
+<div style="margin-top:75px"></div>
+<div class="container">
+  <div class="row">
+    <div class="col-5 offset-3">
+     <% if instructor_signed_in? %>
+      <h1 class="h3 mb-3 font-weight-normal text-center">Welcome <%= current_instructor.nickname %> <img class="instructor-image rounded-circle" id="instructor-image-account" <%if current_instructor.logo.attached?%> <%= image_tag current_instructor.logo, alt: 'image' %> <% end %></h1>
+    <% else %>
+      <h1 class="h3 mb-3 font-weight-normal text-center"><%= instructor_by_id.nickname %>  information</h1>
+    <% end %>
+      <p class="p mb-3 text-center"><%= link_to 'Instructor website', "http://#{instructor_by_id.website}", :target => "_blank" %></p> 
+    </div>
+    <div class="col-2">
+      <% if instructor_signed_in? && current_instructor.id == params[:id].to_i %>
+        <%= link_to 'Edit account', edit_instructor_path(@instructor), class: "btn btn-outline-primary btn-sm" %>
+      <% end %>
+    </div>
+  </div>
+  <div style="margin-top:90px"></div>
+  <div class="row">
+    <table class="table table-striped table">
+      <h2>Proposed courses</h2>
+      <% if instructor_signed_in? && current_instructor.id == params[:id].to_i %>
+        <div class="col-3">
+          <div style="margin-top:10px"></div>
+            <%= link_to 'Add a new course', new_course_path, class: "btn btn-outline-primary" %>
+        </div>
+        <div style="margin-top: 20px;"></div>
+      <% end %>
+      <thead>
+        <tr class="text-center">
+          <th scope="col">Image</th>
+          <th scope="col">Title</th>
+          <th scope="col">Duration</th>
+          <th scope="col">Price</th>
+            <% if instructor_signed_in? && current_instructor.id == params[:id].to_i %>
+              <th scope="col">Edit</th>
+              <th scope="col">Remove</th>
+              <th scope="col">Put forward</th>
+            <% end %>
+        </tr>
+      </thead>
+      <% course_array_by_params.each do |one_course|%>
+      <tbody>
+        <tr>
+          <td class="align-middle text-center"> <%if one_course.picture.attached?%> <%= image_tag one_course.picture, alt: 'image', class:"avatar-image rounded-circle" %> <% end %> </td>
+          <td class="align-middle text-center"> <%= link_to one_course.title, course_path(one_course) %></td> 
+            <% if one_course.duration == 0 %>
+              <td class="align-middle text-center"> Join anytime </td>
+            <% else %>
+              <td class="align-middle text-center"><%= one_course.duration%> <%= one_course.duration_scale%></td>
+            <% end %>
+            <% if one_course.price == 0 %>
+              <td class="align-middle text-center"> Free </td>
+            <% else %>
+              <td class="align-middle text-center"><%= one_course.price%>€ </td> 
+            <% end %>
+            <% if instructor_signed_in? && current_instructor.id == one_course.instructor_id%>   
+              <td class="align-middle text-center"> <%= link_to 'Edit', edit_course_path(one_course), class:"btn btn-md btn-outline-secondary" %></td>  
+              <td class="align-middle text-center"><%= button_to "Remove", {:controller => :courses, :action => 'destroy', :id => one_course.id }, method: :delete, class: 'btn btn-md btn-outline-danger'%></td>
+              <% if InstructorCart.exists?(course_id: one_course.id, instructor_id: current_instructor.id) %>
+                <td class="align-middle text-center"> the item is already in your cart </td>
+              <% elsif featured_courses(one_course) != nil %>
+                <td class="align-middle text-center"> <%= button_to "Bring back to top", {:controller => :instructor_carts, :action => 'create'}, method: :post, params: {'instructorcart[instructor_id]' => current_instructor.id, 'instructorcart[course_id]' => one_course.id}, class: "btn btn-md btn-outline-warning" %> </td>
+              <% else %>
+                <td class="align-middle text-center"> <%= button_to "Put forward", {:controller => :instructor_carts, :action => 'create'}, method: :post, params: {'instructorcart[instructor_id]' => current_instructor.id, 'instructorcart[course_id]' => one_course.id}, class: "btn btn-md btn-warning " %> </td>
+              <% end %>
+            <% end %>
+        </tr>
+      </tbody>
+    <%end%>
+  </table>
+  </div>
+</div>

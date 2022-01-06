@@ -1,0 +1,7 @@
+<% if current_user.admin == true%>
+  <%= render 'users/show_partials/show_admin_welcome' %>
+  <%= render 'users/show_partials/show_admin_body' %>
+
+<% else %>
+  <%= render 'users/show_partials/show_user' %>
+<% end %>

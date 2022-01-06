@@ -1,0 +1,18 @@
+<html>
+  <head>
+    <title>The Gossip Project</title>
+  </head>
+  <body>
+    <h1>Bienvenu sur le super site de potins !</h1>
+    <p> La liste des potins arrive bientôt ! En attendant, tu peux créer ton premier potin en clioquant sur le lien ci-dessous :</p>
+    <a href="/gossips/new/">Créer mon premier potin</a>
+    
+    <% gossips.each do |gossip| %>
+        <p>
+          <%= gossip.author %><br/>
+          <%= gossip.content %>
+        </p>
+      <% end %>
+
+  </body>
+</html>

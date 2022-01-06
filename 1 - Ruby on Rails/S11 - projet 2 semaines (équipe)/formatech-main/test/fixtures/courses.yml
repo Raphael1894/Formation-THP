@@ -1,0 +1,27 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  title: MyString
+  price: 9.99
+  has_diploma: false
+  description: MyText
+  is_remote: false
+  adress: MyString
+  zip_code: 1
+  image_url: 
+  duration: 1
+  start_date: 2021-09-07 12:54:33
+  duration_scale: MyString
+
+two:
+  title: MyString
+  price: 9.99
+  has_diploma: false
+  description: MyText
+  is_remote: false
+  adress: MyString
+  zip_code: 1
+  image_url: 
+  duration: 1
+  start_date: 2021-09-07 12:54:33
+  duration_scale: MyString

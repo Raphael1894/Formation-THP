@@ -1,0 +1,146 @@
+body{
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+footer{
+border-top: 2px solid grey;
+ margin-top: auto;
+ background-image: linear-gradient(to bottom right, #373B44, #4286f4);
+}
+
+#footer-icon{
+  color: white;
+}
+
+/*------------ static page ------------*/ 
+.breakword{
+  word-wrap: break-word;
+}
+.sameline{
+  display: inline-block;
+}
+.centered{
+  margin-left: auto;
+  margin-right: auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+.favorite-image{
+  width: 250px;
+  height: 250px;
+}
+.profile-image{
+  width: 150px;
+  height: 150px;
+}
+
+.jumbotron{
+  min-height: 83vh;
+  background-image: url(/assets/jumbotron/jumbotron.jpeg);
+  background-size: cover;
+}
+
+.logo-brand-jumbotron{
+  width: 250px;
+  height: 250px;
+}
+
+.carousel-image{
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 170%;
+  opacity:0.75;
+}
+
+.carousel-caption{
+  border-radius: 12%;
+  background-color: lightblue;
+  opacity: 0.75;
+}
+
+.carousel-control-prev{
+  margin-top: 10rem;
+}
+
+.carousel-control-next{
+  margin-top: 10rem;
+}
+/*------------ course index ------------*/ 
+.fa-star{
+  color: #1371A4;  
+}
+
+.banner{
+  min-height: 40vh;
+  background-image: url(/assets/banner/banner.jpeg);
+  background-size: cover;
+}
+
+/*------------ navbar ------------*/ 
+.logo-brand{
+  width: 40px;
+  height: 40px;
+}
+
+.avatar-image{
+  width: 40px;
+  height: 40px;
+}
+
+/*------------ user show ------------*/ 
+#container-favorites{
+  border-radius: 2%;
+  background-image: linear-gradient(to bottom right, white, grey);
+  padding: 10px;
+  padding-bottom: 30px;
+  border: 1px solid grey;
+}
+
+#text-favorites{
+  text-decoration: solid underline black 1px;
+}
+
+.btn-space {
+  margin-right: 5px;
+}
+
+/*------------ instructor show ------------*/ 
+#instructor-image-account{
+  width: 80px;
+  height: 80px;
+  margin-left: 15px;
+}
+
+/*------------ admin show ------------*/ 
+.container-add-admin{
+  border-radius: 2%;
+  border: 5px solid blue;
+}
+
+.container-courses-list{
+  background-color: #ECF0F1;
+}
+
+#btn-back-to-top {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  display: none;
+}
+
+#btn-go-down {
+  position: fixed;
+  bottom: 20px;
+  right: 50%;
+  display: block;
+}
+
+#navbar-instructor{
+  padding-top: 35px;
+}
+

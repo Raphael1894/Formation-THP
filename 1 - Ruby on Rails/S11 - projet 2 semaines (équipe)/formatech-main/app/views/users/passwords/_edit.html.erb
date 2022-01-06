@@ -1,0 +1,36 @@
+<body>
+  <div class="container">
+    <div class="row">
+      <div class="col-md-6 offset-md-3">
+        <div style="margin-top:50px"></div>
+        <h1 class="h3 mb-3 font-weight-normal text-center">Change your password?</h1>
+        <%= form_for(resource, as: resource_name, url: password_path(resource_name), html: { method: :put }) do |f| %>
+          <%= render "devise/shared/error_messages", resource: resource %>
+          <%= f.hidden_field :reset_password_token %>
+          <br>
+          <div class="field">
+            <strong><%= f.label :password, "New password" %><br /></strong>
+            <% if @minimum_password_length %>
+              <em>(<%= @minimum_password_length %> characters minimum)</em><br />
+            <% end %>
+            <%= f.password_field :password, autofocus: true, autocomplete: "new-password", class: "form-control" %>
+          </div>
+          <br>
+          <div class="field">
+            <strong><%= f.label :password_confirmation, "Confirm new password" %></strong><br />
+            <%= f.password_field :password_confirmation, autocomplete: "new-password", class: "form-control" %>
+          </div>
+          <div class="actions">
+          <div style="margin-top:50px"></div>
+            <div class="text-center">
+              <%= f.submit "Change my password", class: "btn btn-lg btn-primary btn-block" %>
+            </div>
+          </div>
+        <% end %>
+        <div class="text-center">
+          <%= render "devise/shared/links" %>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>

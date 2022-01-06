@@ -1,0 +1,140 @@
+<div class="container">
+  <div style="margin-top:50px"></div>
+  <div class="row">
+    <% if Course.exists?(params[:id])%>
+      <h1 class="h3 mb-3 font-weight-normal text-center">Edit course</h1>
+    <%else%>
+      <h1 class="h3 mb-3 font-weight-normal text-center">New course</h1>
+    <%end%>
+    <div class="col-md-4 offset-md-1">
+      <%= form_with(model: course, local: true) do |form| %>
+        <% if course.errors.any? %>
+          <div id="error_explanation">
+            <h2><%= pluralize(course.errors.count, "error") %> prohibited this course from being saved:</h2>
+            <ul>
+            <% course.errors.full_messages.each do |message| %>
+              <li><%= message %></li>
+            <% end %>
+            </ul>
+          </div>
+        <% end %>
+        <div class="field">
+          <strong><%= form.label :title %></strong>
+          <%= form.text_field :title, class: "form-control" %>
+        </div>
+        <div class="field">
+          <strong><%= form.label :price %></strong>
+          <%= form.number_field :price, class: "form-control" %>
+        </div>
+        <div class="field">
+          <strong><%= form.label :description %></strong>
+          <%= form.text_area :description, class: "form-control" %>
+        </div>
+        <div class="field">
+          <%= form.label :diploma %>
+          <%= form.check_box :diploma%>
+        </div>
+        <div class="field">
+          <%= form.label :remote %>
+          <%= form.check_box :remote%>
+        </div>
+        <div class="field">
+          <strong><%= form.label :address %></strong>
+          <%= form.text_field :address, class: "form-control" %>
+        </div>
+        <div class="field">
+          <strong><%= form.label :zip_code %></strong>
+          <%= form.number_field :zip_code, class: "form-control" %>
+        </div>
+    </div>
+      <div class="col-md-4 offset-md-2">
+        <div class="field">
+          <strong><%= form.label :duration %></strong> (select 0 if ongoing)
+          <%= form.number_field :duration, class: "form-control" %>
+        </div>
+        <div class="field">
+          <strong><%= form.label :duration_scale %></strong>
+          <%= form.select :duration_scale, ['hour', 'day', 'week', 'month', 'year'], class: "form-control" %>
+        </div>
+        <div class="field">
+          <%= form.label :start_date %>
+          <%= form.date_select :start_date, :discard_hours => true, class: "form-control" %>
+        </div>
+        <% if Course.exists?(params[:id])%> 
+          <div class="field">   
+            <div style="margin-top: 20px"></div>
+            <strong>Select tags for your course</strong>    
+            <div class="overflow-auto p-3 mb-3 mb-md-0 me-md-3" style="max-height: 200px;">
+              <% x=1 %>
+              <% all_tags.each do |one_tag| %>
+                <%= fields_for :fields do |f|%>
+                  <% if Field.find_by(tag_id: x, course_id: params[:id].to_i) != nil %>
+                    <%= f.check_box x, {checked: true}, checked_value = "1" %> -
+                  <%else%>
+                    <%= f.check_box x %> -
+                  <%end%>
+                  <%= f.label one_tag.name%>
+                  <% x=x+1%>
+                  <div style="margin-top: 5px"></div>
+                <%end%>
+              <%end%>
+            </div>
+          </div>
+        <%else%>
+          <div class="field">        
+            <div style="margin-top: 20px"></div>
+            <strong>Select tags for your course</strong>    
+            <div class="overflow-auto p-3 mb-3 mb-md-0 me-md-3" style="max-height: 200px;">
+              <% x=1 %>
+              <% all_tags.each do |one_tag| %>
+                <%= fields_for :fields do |f|%>
+                  <%= f.check_box x %> -
+                  <%= f.label one_tag.name%>
+                  <% x=x+1%>
+                  <div style="margin-top: 5px"></div>
+                <%end%>
+              <%end%>
+            </div>
+          </div>
+        <%end%>
+        <div style="margin-top: 40px"></div>
+        <% if Course.exists?(params[:id])%>
+          <%if @course.picture.attached?%>
+            <%= image_tag @course.picture, alt: 'image', width: "350" %>
+            <br>
+            <br>
+          <%else%>
+              <p>=== There aren't any pictures linked to this course yet ===</p>
+          <%end%>
+        <%end%>
+        <div class="field">
+          <%= form.label 'Picture', :class => 'button hollow', :for => 'pic' %>
+          <%= form.file_field :picture, :class => 'show-for-sr', :id => 'pic' %>
+        </div>
+        <br>
+        <div class="actions">
+          <%= form.submit "Submit", class: "btn btn-primary btn-block" %>
+          <% if instructor_signed_in? %>
+            <%= link_to 'Back', instructor_path(current_instructor.id), class: "btn btn-outline-primary btn-block" %>
+          <% else %>
+            <%= link_to 'Back', user_path(current_user.id), class: "btn btn-outline-primary btn-block" %>
+          <% end %>
+        </div>
+        <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
+        <% if instructor_signed_in? %>
+        
+          <% if Course.exists?(params[:id])%>
+            <input type="hidden" name="course[instructor_id]" value=<%= current_instructor.id %> id="instructor_id">
+          <% else %>
+            <input type="hidden" name="course[instructor_id]" value=<%= current_instructor.id %> id="instructor_id">
+          <% end %>
+        <% else %>
+          <% Course.exists?(params[:id])%>
+          
+            <% find_course = Course.find(params[:id]) %>
+            <input type="hidden" name="course[instructor_id]" value=<%= find_course.instructor_id %> id="instructor_id">
+        <% end %>
+      <% end %>
+      </div>
+  </div>
+</div>

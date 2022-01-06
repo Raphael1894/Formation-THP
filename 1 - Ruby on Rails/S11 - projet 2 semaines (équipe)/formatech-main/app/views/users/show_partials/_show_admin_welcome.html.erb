@@ -1,0 +1,9 @@
+<div class="container">
+  <p id="notice"><%= notice %></p>
+  <div style="margin-top:60px"></div>
+  <div class="row">
+    <div class="mb-3 font-weight-normal text-center">
+      <h1><%= @user.nickname %> <a class="btn btn-sm btn-outline-secondary" <%= link_to 'Edit', edit_user_path(@user) %></a></h1>
+    </div>
+  </div>
+</div>

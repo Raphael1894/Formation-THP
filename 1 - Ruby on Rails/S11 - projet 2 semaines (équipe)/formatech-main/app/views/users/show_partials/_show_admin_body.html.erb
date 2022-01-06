@@ -1,0 +1,107 @@
+<!--Navbar-->
+<div class="container-courses-list">
+  <div class="container">
+    <div style="margin-top:50px"></div>
+    <% x = 0 %>
+    <% y = 0 %>
+    <nav id="navbar-instructor" class="navbar navbar-light bg-light px-3">
+      <h3 class="h3 mb-3 font-weight-normal text-center" style="margin-left: 95px; text-decoration: underline 1px black;">All the proposed courses</h3>
+      <ul class="nav nav-pills">
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" style="margin-right: 95px;" data-bs-toggle="dropdown" role="button" aria-expanded="false">Go to</a>   <!--Go to button-->
+          <ul class="dropdown-menu">
+            <% instructor_array_all.each do |one_instructor|%>
+              <% if Course.find_by(instructor_id: one_instructor.id) != nil %>
+                <% y = y + 1 %>
+                <li><a class="dropdown-item" href="#scrollspyHeading<%=y%>"><%= one_instructor.nickname%></a></li>
+              <%end%>
+            <%end%>
+          </ul>
+        </li>
+      </ul>
+    </nav>
+    <!-- Back to top button -->
+    <button type="button" class="btn btn-primary btn-floating btn-lg" id="btn-back-to-top">
+      <i class="fas fa-arrow-up"></i>
+    </button>
+    <!--Table-->
+    <div data-bs-spy="scroll" data-bs-target="#navbar-instructor" data-bs-offset="0" class="scrollspy-example" tabindex="0">
+      <% instructor_array_all.each do |one_instructor|%>
+        <% if Course.find_by(instructor_id: one_instructor.id) != nil %>  
+          <table class="table table-striped" style="width: 80%; margin-left:10%;">
+            <thead-dark>
+              <tr class="text-center">
+                <th scope="col">Image</th>
+                <th scope="col">Title</th>
+                <th scope="col">Duration</th>
+                <th scope="col">Price</th>
+                <th scope="col">Featured</th>
+                <th scope="col">Edit</th>
+                <th scope="col">Remove</th>
+              </tr>
+            </thead-dark>
+            <div style="margin-top:40px"></div>
+            <tbody>
+              <% x = x + 1 %>
+              <h5 style="margin-left:10%;" id="scrollspyHeading<%=x%>">Instructor nickname : <%= one_instructor.nickname%></h5>
+              <div style="margin-top:10px"></div>
+              <% course_array_by_instructor(one_instructor).each do |one_course|%>
+              <tr>
+                <td> <%if one_course.picture.attached?%> <%= image_tag one_course.picture, class:"avatar-image rounded-circle", alt: 'image' %> <% end %> </td>
+                <td class="align-middle"> <%= link_to one_course.title, course_path(one_course) %></td> 
+                <% if one_course.duration == 0 %>
+                  <td class="align-middle text-center"> Join anytime </td>
+                <% else %>
+                  <td class="align-middle text-center"><%= one_course.duration%> <%= one_course.duration_scale%></td>
+                <% end %>
+                <% if one_course.price == 0 %>
+                  <td class="align-middle text-center"> Free </td>
+                <% else %>
+                  <td class="align-middle text-center"><%= one_course.price%>€ </td> 
+                <% end %>
+                <% if featured_courses(one_course) != nil%>
+                  <td class="align-middle text-center">Featured</td> 
+                <% else %>
+                  <td class="align-middle text-center">Regular</td> 
+                <% end %>
+                <td class="align-middle"> <%= link_to 'Edit', edit_course_path(one_course), class:"btn btn-sm btn-outline-secondary w-100" %></td>  
+                <td class="align-middle"><%= button_to "Remove", {:controller => :courses, :action => 'destroy', :id => one_course.id }, method: :delete, class: 'btn btn-sm btn-outline-danger w-100'%></td>
+              </tr>
+            </tbody>
+          <%end%> 
+        </table>
+      <%end%>
+    <%end%>
+    </div>
+    <div style="padding-bottom:80px"></div>
+  </div>
+</div>
+
+
+<script>
+//Get the button
+let mybutton = document.getElementById("btn-back-to-top");
+// When the user scrolls down 20px from the top of the document, show the button
+window.onscroll = function () {
+  scrollFunction();
+};
+
+function scrollFunction() {
+  if (
+    document.body.scrollTop > 289 ||
+    document.documentElement.scrollTop > 289
+  ) {
+    mybutton.style.display = "block";
+  } else {
+    mybutton.style.display = "none";
+  }
+}
+// When the user clicks on the button, scroll to the top of the document
+mybutton.addEventListener("click", backToTop);
+
+function backToTop() {
+  document.body.scrollTop = 289;
+  document.documentElement.scrollTop = 289;
+}
+</script>
+

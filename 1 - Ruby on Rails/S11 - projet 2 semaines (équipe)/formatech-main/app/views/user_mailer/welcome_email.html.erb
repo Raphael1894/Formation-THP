@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
+  </head>
+  <body>
+    <div class="container" style="text-align:center">
+      <div style="margin-top: 100px;"></div>
+        <h1>REGISTRATION CONFIRMATION</h1>
+        <br>
+          <p>
+            Hi <strong><%= @user.nickname %></strong> and welcome to our home!
+          </p>
+          <p>
+            You have registered on Formatech.com using the following email: <strong><%= @user.email %></strong>.
+          </p>
+          <p>
+            To access your customer area, log in via: <strong><%= @url %></strong>.
+          </p>
+          <br>
+          <p> 
+            See you soon on <strong>Formatech.com</strong> !
+          </p>
+          <br>
+    </div> 
+    <div class="container" style="text-align:center">
+      <%= image_tag attachments['Formatech-logo.png'].url%>
+    </div> 
+  </body>
+</html>

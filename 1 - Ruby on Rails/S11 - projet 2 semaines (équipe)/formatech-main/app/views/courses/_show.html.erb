@@ -1,0 +1,135 @@
+<button type="button" class="btn btn-primary btn-floating btn-lg" id="btn-back-to-top">
+  <i class="fas fa-arrow-up"></i>
+</button>         
+<div class="container" style="margin-top: 50px">
+  <p id="notice"><%= notice %></p>
+  <div class="row">
+    <% if user_signed_in?%>
+      <% if current_user.admin == false %>
+        <div>
+          <% one_favorite = Favorite.find_by(course_id: @course.id, user_id: current_user.id)%>
+          <br>
+            <% if one_favorite != nil %>
+              <%= link_to favorite_path(one_favorite.id), method: :delete do %>
+                <i class="fas fa-star fa-3x"></i>
+              <%end%>           
+                <p>Already added as favorite</p> 
+            <% else %>
+                <%= link_to favorites_path(:user_id => current_user.id, :course_id => @course.id), :method => :post do %>
+                <i class="far fa-star fa-3x"></i><%end%>
+            <% end %>
+        </div>
+      <% end %>
+    <% end %>  
+    <div class="col-md-6 offset-1">
+      <h1 class="breakword" style="primary"> <%= @course.title %> </h2>
+      <h6>
+        <strong>By : </strong>
+        <%= link_to find_instructor(@course) , instructor_path(@course.instructor_id) %>
+      </h6>
+      <br>
+      <h5>
+        <strong>Start date :</strong> 
+        <%= @course.start_date.strftime('%d-%m-%y')%>
+      </h5>
+      <h5>
+        <strong>Duration :</strong>
+        <%= @course.duration %> 
+        <%= @course.duration_scale %> 
+      </h5>
+      <h5>
+        <strong>Price :</strong>
+        <%= @course.price %> € 
+      </h5>
+      <h5>
+        <strong>Address :</strong>
+        <%= @course.address %>
+      </h5>
+      <h5>
+        <strong>Zip code :</strong>
+        <%= @course.zip_code %>
+      </h5>
+        <% if @course.diploma == true %>
+          <i class="fas fa-check-square"></i> Diploma
+        <% end %>
+        <br>
+        <% if @course.remote == true %>
+          <i class="fas fa-check-square"></i> Remote
+        <% end %>
+    </div>
+    <div class="col-md-5">
+      <%if @course.picture.attached?%> 
+        <%= image_tag @course.picture, alt: 'image', width: "350" %> 
+      <% end %>
+      <br>
+      <br>
+      <div class="sameline">
+        <% if user_signed_in?%>
+          <%= link_to like_course_path(@course), class: "like-btn", method: :put, remote: :true do %>
+            <i class="btn btn-primary fas fa-thumbs-up"></i> 
+          <% end %>
+        <%end%>
+      </div>
+      <div>
+        <div style = "margin-top: 5px;"></div>
+        <div class="sameline likes-count"><%= @course.get_upvotes.size%></div>
+        <% if @course.get_upvotes.size <= 1 %>
+          <div class="sameline"><%= "person recommand this course" %></div>
+        <%else%> 
+          <div class="sameline"><%= "persons recommand this course" %></div>
+        <%end%>
+      </div>    
+    </div>
+  </div>
+  <br>
+  <div class="row">
+    <div class="col-md-6 offset-1">           
+      <div style=" inline-size: 80%px; overflow-wrap: break-word;">
+        <h4><strong>Description :</strong></h4>
+        <h6><%= @course.description %></h6>
+      </div>
+    </div> 
+    <div class="col-md-5"> 
+      <% all_tags = Field.all.where(course_id: params[:id].to_i) %>
+      <% if all_tags.any? %>
+        <h4>Current jobs on Indeed :</h4>
+        <% all_tags.each do |one_field|%>
+          <% one_tag = Tag.find(one_field.tag_id)%>
+          <% if one_tag.job_offer == 0 %>
+            <%= "No offers found. Please try again later."%>
+            <% break %>
+          <% else %>
+            <%= "#{one_tag.job_offer}" + " offers for " + "\'#{one_tag.name}'"%>
+          <% end %>
+          <br>
+        <%end%>
+      <%end%>
+    </div>     
+  </div> 
+</div> 
+<br>
+<hr>
+<br>
+<script>
+  let mybutton = document.getElementById("btn-back-to-top");
+  window.onscroll = function () {
+    scrollFunction();
+  };
+
+  function scrollFunction() {
+    if (
+      document.body.scrollTop > 400 ||
+      document.documentElement.scrollTop > 400
+    ) {
+      mybutton.style.display = "block";
+    } else {
+      mybutton.style.display = "none";
+    }
+  }
+  mybutton.addEventListener("click", backToTop);
+
+  function backToTop() {
+    document.body.scrollTop = 0;
+    document.documentElement.scrollTop = 0;
+  }
+  </script>

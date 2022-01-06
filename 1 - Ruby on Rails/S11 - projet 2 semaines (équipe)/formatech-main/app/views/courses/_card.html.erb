@@ -1,0 +1,90 @@
+<button type="button" class="btn btn-primary btn-floating btn-lg" id="btn-back-to-top">
+  <i class="fas fa-arrow-up"></i>
+</button>
+<div class="container">
+  <br>
+  <h3 class="text-center">List of all our courses</h3>
+  <br>
+  <div class="row">
+    <% @courses.order(cached_votes_total: :desc).each do |one_course| %>
+      <div class="col-sm-4 pt-3">
+        <div class="card" style="width: 18rem; height: 33rem; margin-bottom: 50px;">
+          <%if one_course.picture.attached?%> 
+            <%= image_tag one_course.picture, class:"card-img-top", alt: 'image', style: 'height: 35%' %> 
+          <% end %> 
+            <div class="card-body"> 
+              <% if user_signed_in? %>
+                <% if current_user.admin == false && user_signed_in? %>
+                  <div class="d-flex justify-content-end my-2">
+                    <% one_favorite = Favorite.find_by(course_id: one_course.id, user_id: current_user.id)%>
+                    <% if one_favorite != nil %>
+                      <%= link_to favorite_path(one_favorite.id), method: :delete do %>
+                      <i class="fas fa-star fa-2x color-primary"></i><%end%> 
+                    <% else %>
+                      <%= link_to favorites_path(:user_id => current_user.id, :course_id => one_course.id), :method => :post do %>
+                      <i class="far fa-star fa-2x"></i><%end%>
+                    <% end %>
+                  </div>
+                <% end %>  
+              <% end %>  
+              <strong><p class="card-title"><%= one_course.title %></p></strong>
+              <br>
+              <p class="card-text"> Proposed by :  <%= find_instructor(one_course) %></p>
+            </div>        
+          <% if user_signed_in?%>
+            <div class="text-center">
+              <div class="sameline likes-count"><%= one_course.get_upvotes.size%></div>
+                <% if one_course.get_upvotes.size <= 1 %>
+                  <p class="sameline"><%= "person recommand this course" %></p>
+                <%else%> 
+                  <p class="sameline"><%= "persons recommand this course" %></p>
+                <%end%> 
+            </div>
+          <%else%>
+            <div class="text-center">
+              <div class="sameline likes-count"><%= one_course.get_upvotes.size%></div>
+              <% if one_course.get_upvotes.size <= 1 %>
+                <p class="sameline"><%= "person recommand this course" %></p>
+              <%else%> 
+                <p class="sameline"><%= "persons recommand this course" %></p>
+              <%end%> 
+              <br>     
+            </div>
+          <% end %>
+          <div class="text-center">
+            <p><%= comment_array_by_course(one_course).size %> comments</p>          
+          </div>
+          <div class="card-footer">
+            <div class="d-flex justify-content-center my-2">
+              <%= link_to 'Get more informations', one_course, class:"btn btn-info text-light" %>
+              <br>
+            </div>
+          </div>
+        </div>
+      </div>
+    <% end %>
+  </div>
+</div>
+<script>
+  let mybutton = document.getElementById("btn-back-to-top");
+  window.onscroll = function () {
+    scrollFunction();
+  };
+
+  function scrollFunction() {
+    if (
+      document.body.scrollTop > 330 ||
+      document.documentElement.scrollTop > 330
+    ) {
+      mybutton.style.display = "block";
+    } else {
+      mybutton.style.display = "none";
+    }
+  }
+  mybutton.addEventListener("click", backToTop);
+
+  function backToTop() {
+    document.body.scrollTop = 0;
+    document.documentElement.scrollTop = 0;
+  }
+</script>

@@ -1,0 +1,9 @@
+<h1>New User</h1>
+
+<%= form_with model:@user, url: users_path, method: :post, local: :true do |form| %>
+  <%= form.label :query, "Name:" %>
+  <%= form.text_field :first_name %>
+    <%= form.label :query, "Email:" %>
+  <%= form.text_field :email %>
+  <%= form.submit "create new user" %>
+<% end %>

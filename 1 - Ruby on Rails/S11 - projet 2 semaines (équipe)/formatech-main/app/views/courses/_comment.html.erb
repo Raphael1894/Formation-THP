@@ -1,0 +1,44 @@
+<div class="container">
+  <div class="col-md-8 offset-2">
+    <div style=" inline-size: 80%px; overflow-wrap: break-word;">
+    <h3><%= comment_array_by_params.size %> Comments :</h3>
+      <div class="overflow-auto p-3 mb-3 mb-md-0 me-md-3" style="max-width: 2000px; max-height: 350px;">
+        <% if @comments.nil? %>
+          <% comment_array_by_params.each do |comment| %>
+            <img class="avatar-image rounded-circle"
+            <%if user_by_comment_user_id(comment).avatar.attached?%> 
+              <%= image_tag user_by_comment_user_id(comment).avatar, alt: 'image' %> 
+            <% end %>
+            <p> Created on <%= comment.updated_at.strftime('%d-%m-%y') %> by <strong><%= user_by_comment_user_id(comment).nickname %></strong></p>
+            <p> <%= comment.content %> </p>
+            <% if current_user %> 
+              <% if comment.user_id == @user.id %> 
+                <%= link_to 'Destroy', comment, method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-sm btn-outline-danger' %> 
+              <% end %>  
+            <% end %>
+              <hr>
+          <% end %>
+        <%else %>
+          <p> No comments for the moment </p>
+        <%end%>
+      </div>
+    </div>
+    <br>
+    <% if user_signed_in? %>
+      <div class="form text-center">
+        <%= form_tag(comments_path, method: :post, class: "form") do %>
+          <label for="content"> Your comment :
+          <br>
+          <br>
+          <%= text_area_tag  :content, nil, :size =>"50x5" %>
+          <input type="hidden" id="user_id" name="user_id" value= "<%= @user.id %>" >
+          <input type="hidden" id="course_id" name="course_id" value= "<%= @course.id %>">
+          <br>
+          <br>
+          <%= submit_tag 'Submit your comment', :name => 'commit'%>
+        <% end %>
+      </div>
+    <% end %>
+    <br>
+  </div>
+</div>

@@ -1,0 +1,19 @@
+<html>
+  <head>
+    <title>The Gossip Project</title>
+  </head>
+  <body>
+    <h1>Mon super site de gossip!</h1>
+    <a href="/gossips/new/">Creer un gossip</a>
+    <% gossips.each do |gossip| %>
+        <p>
+          <%= gossip.author %><br/>
+          <%= gossip.content %><br/>
+          <%  url = "/gossips/" + "#{gossips.index(gossip) + 1}" %>
+          <%  url_edit = "/gossips/" + "#{gossips.index(gossip) + 1}" + "/edit/" %>
+          <a href=<%= url %>>Aller au gossip</a><br/>
+          <a href=<%= url_edit %>>Editer le gossip</a><br/>
+        </p>
+      <% end %>
+  </body>
+</html>

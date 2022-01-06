@@ -1,0 +1,51 @@
+<div class="jumbotron"> 
+  <div class="container">
+    <br>
+      <p class="text-light" id="notice"><%= notice %></p>
+      <br>
+      <img src="assets/formatech_logo/logo_transparent.png" class="logo-brand-jumbotron" alt="Logo Formatech">
+      <div style="margin-top:35px"></div>
+      <h4 class="text-light">Welcome <% if user_signed_in? %> <%=@user.nickname%> <%end %></p>
+      <h5 class="text-light">Find the perfect course <br>thanks to our amazing catalog !</h5>
+      <br>
+    <% if user_signed_in?%>
+      <%= link_to 'Take a look !', courses_path, class:"btn btn-light btn-lg", id:"button-jumbotron" %>
+    <% elsif instructor_signed_in?%>
+      <%= link_to 'Take a look !', courses_path, class:"btn btn-light btn-lg", id:"button-jumbotron" %>
+    <% else %>
+      <%= link_to "New user ?", new_user_registration_path, class:"btn btn-warning btn-lg text-light" %>
+      <%= link_to "New instructor ?", new_instructor_registration_path, class:"btn btn-warning btn-lg text-light" %>
+    <% end %>
+    </p>
+  </div>
+</div>
+<button type="button" class="btn btn-warning btn-floating btn-lg rounded-circle" id="btn-go-down">
+  <i class="fas fa-arrow-down"></i>
+</button>
+
+<script>
+  let mybutton = document.getElementById("btn-go-down");
+  window.onscroll = function () {
+    scrollFunction();
+  };
+
+  function scrollFunction() {
+    if (
+      document.body.scrollTop > 5 ||
+      document.documentElement.scrollTop > 5
+    ) {
+      mybutton.style.display = "none";
+
+    } else {
+      
+      
+      mybutton.style.display = "block";
+    }
+  }
+  mybutton.addEventListener("click", backToTop);
+
+  function backToTop() {
+    document.body.scrollTop = 700;
+    document.documentElement.scrollTop = 700;
+  }
+</script>

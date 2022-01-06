@@ -1,0 +1,59 @@
+<div class="container">
+  <div style="margin-top:55px"></div>
+  <h1 class="h3 mb-3 font-weight-normal text-center">Edit Profile</h1>
+  <%= form_with(model: user, local: true) do |form| %>
+    <% if user.errors.any? %>
+      <div id="error_explanation">
+        <h2><%= pluralize(user.errors.count, "error") %> prohibited this user from being saved:</h2>
+        <ul>
+        <% user.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+        </ul>
+      </div>
+    <% end %>
+    <div style="margin-top:35px"></div>
+    <div class="row">
+      <div class="col-md-4 offset-md-1">
+        <div class="form-group">
+          <strong><%= form.label :nickname %></strong>
+          <%= form.text_field :nickname, class: "form-control" %>
+        </div>
+        <div class="form-group">
+          <strong><%= form.label :email %></strong>
+          <%= form.text_field :email, class: "form-control" %>
+        </div>
+        <br>
+      </div>
+    <div class="col-md-4 offset-md-2">
+      <h3>Avatar</h3>
+        <%if @user.avatar.attached?%>
+          <%= image_tag @user.avatar, alt: 'image', class:"avatar-image rounded-circle" %>
+        <%else%>
+            <p>=== There aren't any avatars linked to this user yet ===</p>
+        <%end%>
+        <h5>Add or modify the avatar ?</h5>
+    <div class="field">
+      <%= form.label 'Avatar', :class => 'button hollow', :for => 'pic' %>
+      <%= form.file_field :avatar, :class => 'show-for-sr', :id => 'pic' %>
+    </div>
+        <div style="margin-top:35px"></div>
+    </div>
+      <div class="d-flex justify-content-center">
+        <%= form.submit "Update profil", class: "btn btn-lg btn-primary btn-block" %>
+        <% end %>
+      </div>
+      <div style="margin-top:10px"></div>
+      <div class="d-flex justify-content-center">
+        <%= link_to 'Back', @user, class:"btn btn-lg btn-primary btn-block"  %>
+      </div>
+    </div>
+  </div>
+</div>
+
+ 
+
+  
+    
+
+  

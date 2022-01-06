@@ -1,0 +1,67 @@
+<div style="margin-top:120px"></div>
+<div class="container">
+	<div class="row">
+		<div class="col-md-4 offset-2 text-center">
+			<h2 class="text-primary" editable="inline" class="display-2 mb-0"><b>Formatech ?</b></h2>
+				<% if user_signed_in? || instructor_signed_in?%>
+				<div style="margin-top: 60px;"></div>
+					<h4 class="text-info" editable="inline"> 
+						<strong>
+							You're probably wondering what is Formatech and in which way it could help you. Formatech is an awesome plateform that serves the only purpose of connecting future students and instructors specialized in digital technologies. Thanks to our awesome plateform, whether you're looking for some new oportunities and trying to find a new course to follow, or someone who wants to share their knowledge, you can count on us to help you !<br><br>
+						</strong>
+					</h4>
+				<% else %>
+					<h4 class="text-info" editable="inline">
+					<div style="margin-top: 30px;"></div> 
+						<strong>
+							You're probably wondering what is Formatech and in which way it could help you. Formatech is an awesome plateform that serves the only purpose of connecting future students and instructors specialized in digital technologies. Thanks to our awesome plateform, whether you're looking for some new oportunities and trying to find a new course to follow, or someone who wants to share their knowledge, you can count on us to help you !<br><br>
+							Want to have a small preview of what it would look like?
+						</strong>
+					</h4>
+					<br>
+					<%= link_to 'Take a look !', courses_path, class:"btn btn-warning btn-lg text-light"  %>
+				<% end %>
+		</div>
+		<div class="col-md-5 offset-1 text-center">
+			<h2 class="text-primary" editable="inline" class="display-2 mb-0"><b>Testimonial</b></h2>
+			<p class="text-info" editable="inline"> <strong>Some of our users wanted to share their feelings with you.<br> See what they think of our service !</strong></p>
+			<div class="lc-block">
+				<div id="testimonial-slider" class="carousel slide" data-bs-ride="carousel">
+					<!-- Left and right controls -->
+					<div class="carousel-control-prev-icon carousel-control-prev " href="#testimonial-slider" data-bs-slide="prev"></div>
+					<div class="carousel-control-next-icon carousel-control-next" href="#testimonial-slider" data-bs-slide="next"></div>
+					<!-- Indicators -->
+					<ul class="carousel-indicators">
+						<li data-bs-target="#testimonial-slider" data-bs-slide-to="0" class=""></li>
+						<li data-bs-target="#testimonial-slider" data-bs-slide-to="1" class=""></li>
+						<li data-bs-target="#testimonial-slider" data-bs-slide-to="2" class="active"></li>
+					</ul>
+					<!-- The slideshow -->
+					<div class="carousel-inner">
+						<div class="carousel-item">
+							<img class="carousel-image" src="/assets/testimonial/image-testimony-1.jpg" alt="user picture">
+							<div class="carousel-caption d-none d-md-block text-primary">
+								<strong><h5>Aisha Beasley</h5>
+								<p>Very good training program with The Haking Project.</p></strong>
+							</div>
+						</div>
+						<div class="carousel-item">
+							<img class="carousel-image" src="/assets/testimonial/image-testimony-2.jpg" alt="user picture">
+							<div class="carousel-caption d-none d-md-block text-primary">
+								<strong><h5>Andreea Buckley</h5>
+								<p>Good course with lots of practice.</p></strong>
+							</div>
+						</div>
+						<div class="carousel-item active">
+							<img class="carousel-image" src="/assets/testimonial/image-testimony-3.jpg" alt="user picture">
+							<div class="carousel-caption d-none d-md-block text-primary">
+								<strong><h5>Eddie Valiant</h5>
+								<p>Superb platform that allowed me to see very quickly the existing training in the field of design.</p></strong>
+							</div>
+						</div>
+					</div>
+				</div>					
+			</div>
+		</div>
+	</div>
+</div>

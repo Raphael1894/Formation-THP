@@ -1,0 +1,14 @@
+<% if user_signed_in? %>
+  <%= render "banner" %>
+  <p id="notice"><%= notice %></p>
+  <%= render "featured_courses" %>
+  <%= render "card" %>
+<% elsif instructor_signed_in? %>
+  <%= render "banner" %>
+  <p id="notice"><%= notice %></p>
+  <%= render "featured_courses" %>
+  <%= render "card" %>
+<% else %>
+  <%= render "banner" %>
+  <%= render "courses_preview" %>
+<% end %>

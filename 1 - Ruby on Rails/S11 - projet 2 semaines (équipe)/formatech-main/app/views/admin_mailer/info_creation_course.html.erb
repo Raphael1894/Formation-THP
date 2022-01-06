@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
+  </head>
+  <body>
+    <div class="container" style="text-align:center">
+      <div style="margin-top: 100px;"></div>
+        <h1>NEW COURSE</h1>
+        <p> Hi admin,</p>
+        <p>
+          For your information, a new course has been added on the platform <%= @instructor.nickname %>.
+        </p>
+        <p> Have a good day</p>
+        <p> 
+          <strong>Formatech.com</strong> !
+        </p>
+    </div> 
+    <div class="container" style="text-align:center">
+      <%= image_tag attachments['Formatech-logo.png'].url%>
+    </div> 
+  </body>
+</html>

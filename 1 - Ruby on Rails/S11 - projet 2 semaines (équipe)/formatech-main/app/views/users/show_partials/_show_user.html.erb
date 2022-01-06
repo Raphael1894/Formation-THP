@@ -1,0 +1,43 @@
+<div class="container">
+  <div style="margin-top:50px"></div>
+  <div class="row">
+    <div class="mb-3 font-weight-normal text-center">
+      <div class="container">
+        <h1><%= @user.nickname %> <a class="btn btn-sm btn-outline-secondary" <%= link_to 'Edit', edit_user_path(@user) %></a></h1>     
+      </div>
+    </div>
+  </div>
+</div>
+<div style="margin-top:50px"></div>
+<div class="container" id="container-favorites">
+  <div style="margin-top:15px"></div>
+  <div class="h2 mb-3 font-weight-normal text-center" id="text-favorites">Favorites </div>
+    <div class="row">
+      <% favorite_array_by_params.each do |one_favorite| %>
+        <% one_course = Course.find(one_favorite.course_id) %>
+        <% if one_course == nil %>
+          <div class="p mb-3 font-weight-normal text-center">No favorites added</div>
+        <%else%>
+          <div class="col-3">
+            <div class="card border-primary favorite-image" style="height: 22rem; margin-top: 20px;">
+          <%if one_course.picture.attached?%> <%= image_tag one_course.picture, alt: 'image', style:"height: 140px;"%> <% end %>
+              <div class="card-body">
+                <strong> <p class="card-title"><%= one_course.title %> </p></strong><br>
+                <p class="card-text"> Proposed by :  <%= find_instructor(one_course) %></p>
+              </div>
+              <div class="card-footer border-success ">
+                <div class="btn-toolbar">
+                  <%= link_to 'See more', one_course, class:"btn btn-info btn-space text-light" %><br>
+                    <%= button_to "Remove", {:controller => :favorites, :action => 'destroy', :id => one_favorite.id }, method: :delete, class: 'btn btn-outline-danger'%>
+                </div>
+              </div>
+            </div>
+          </div>
+        <% end %>
+      <% end %>
+    </div>
+
+</div>
+
+
+
