@@ -1,5 +1,4 @@
 # Formation-THP
 
-Exercices effectués au long de la formation par The Hacking PToject.
-3 mois de Ruby On Rails
-3 mois de ReactJs
+Exercices effectués au long de la formation par The Hacking Project.
+3 mois d'apprentissage des bases du développement web, Ruby et Ruby On Rails.
